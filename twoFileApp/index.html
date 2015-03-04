@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<script>
+ 
+  var serversocket = new WebSocket("ws://localhost:8085/echo");
+ 
+  serversocket.onopen = function() {
+    serversocket.send("Connection init");
+  }
+ 
+  // Write message on receive
+  serversocket.onmessage = function(e) {
+    document.getElementById('comms').innerHTML += "Received: " + e.data + "<br>";
+  };
+ 
+  function senddata() {
+     var data = document.getElementById('sendtext').value;
+     serversocket.send(data);
+     document.getElementById('comms').innerHTML += "Sent: " + data + "<br>";
+  }
+ 
+</script>
+ 
+</head>
+<body>
+  <input id="sendtext" type="text" placeholder="default 1" value="default 1" />
+  <input type="button" id="sendBtn" value="send" onclick="senddata()"></input>
+ 
+  <div id='comms'></div>
+ 
+</body>
+</html>
+
+
+
+http://blog.teamtreehouse.com/an-introduction-to-websockets
+http://www.dummies.com/how-to/content/html5-and-web-sockets.html
+http://www.sitepoint.com/introduction-to-the-html5-websockets-api/
+http://diveintohtml5.info/forms.html
+http://www.doxsey.net/blog/go-and-assembly/
+http://www.gamedev.net/page/resources/_/technical/game-programming/multiplayer-pong-with-go-websockets-and-webgl-r3112
+
+http://html5doctor.com/server-sent-events/
+
+
+
+
+
+
+
+
+
+
