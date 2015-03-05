@@ -27,6 +27,7 @@ func (manager managerStruct) MessagesHandler(mws *websocket.Conn) {
 			n, err = mws.Read(receivedtext)
 			if err != nil {
 				log.Println("Received error: ", err)
+				continue
 			}
 			receiveChan <- "Received " + string(receivedtext[:n])
 		}
