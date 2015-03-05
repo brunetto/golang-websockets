@@ -3,38 +3,39 @@
 <meta charset="UTF-8" />
 <script>
  
-  var serversocket = new WebSocket("ws://localhost:8085/echo");
- var data = {"Param1":"", "Param2":"", "Param3":""}
+	var messagesocket = new WebSocket("ws://localhost:8085/messages");
+	var datasocket = new WebSocket("ws://localhost:8085/data");
+	var data = {"Param1":"", "Param2":"", "Param3":""}
  
-  serversocket.onopen = function() {
-    serversocket.send("Connection init");
-  }
+	messagesocket.onopen = function() {
+		messagesocket.send("Connection init");
+	}
  
   // Write message on receive
-  serversocket.onmessage = function(event) {
-    document.getElementById('comments').innerHTML += "Received: " + event.data + "<br>";
-// 	document.getElementById('comments').innerHTML = "Received: " + event.data + "<br>";
-  };
+	messagesocket.onmessage = function(event) {
+		document.getElementById('comments').innerHTML += "Received: " + event.data + "<br>";
+	// 	document.getElementById('comments').innerHTML = "Received: " + event.data + "<br>";
+	};
  
-  function senddata() {
-     var data.param1 = document.getElementById('param1').value;
-     var data.param2 = document.getElementById('param2').value;
-     var data.param3 = document.getElementById('param3').value;
-     serversocket.send(data);
-     document.getElementById('comments').innerHTML += "Sent: " + data + "<br>";
-//      document.getElementById('comments').innerHTML = "Sent: " + data + "<br>";
-  }
+	function senddata() {
+		data.Param1 = document.getElementById('param1').value;
+		data.Param2 = document.getElementById('param2').value;
+		data.Param3 = document.getElementById('param3').value;
+		datasocket.send(JSON.stringify(data, null, 2));
+		document.getElementById('comments').innerHTML += "Sent: " + JSON.stringify(data, null, 2) + "<br>";
+	//      document.getElementById('comments').innerHTML = "Sent: " + data + "<br>";
+	}
  
 </script>
  
 </head>
 <body>
-  <input id="param1" type="text" placeholder="default 1" value="default 1" /></br></br>
-  <input id="param2" type="text" placeholder="default 2" value="default 2" /></br></br>
-  <input id="param3" type="text" placeholder="default 3" value="default 3" /></br></br>
-  <input type="button" id="sendBtn" value="Generate" onclick="senddata()"></input>
+	Param 1: <input id="param1" type="text" placeholder="default 1" value="default 1" /> BlaBlaBla </br></br>
+	Param 2: <input id="param2" type="text" placeholder="default 2" value="default 2" /> BlaBlaBla </br></br>
+	Param 3: <input id="param3" type="text" placeholder="default 3" value="default 3" /> BlaBlaBla </br></br>
+	<input type="button" id="sendBtn" value="Generate" onclick="senddata()"></input>
  </br></br>
-  <div id='comments'></div>
+	<div id='comments'></div>
  
 </body>
 </html>
